@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-
+import com.sun.glass.ui.Timer;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -20,7 +20,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.jws.WebParam.Mode;
@@ -136,8 +142,27 @@ public class View extends JFrame {
 		btn[3][1] = b14;
 		btn[3][2] = b15;
 		btn[3][3] = b16;
+		File x = new File("test");
+		System.out.println(x.getAbsolutePath());
+		 try {
+			    Image img = ImageIO.read(getClass().getResource("bild1.png"));
+			    Image img2 = ImageIO.read(getClass().getResource("image1.jpg"));
+			    btn[0][0].setIcon(new ImageIcon(img));
+			  } catch (Exception ex) {
+			    System.out.println(ex);
+			  }
 		
 	}
+	protected ImageIcon createImageIcon(String path,
+            String description) {
+java.net.URL imgURL = getClass().getResource(path);
+if (imgURL != null) {
+return new ImageIcon(imgURL, description);
+} else {
+System.err.println("Couldn't find file: " + path);
+return null;
+}
+}
 	
 	public void ausgabe(){
 		for(int i=0;i<Model.getFieldsize();i++) {
@@ -152,7 +177,9 @@ public class View extends JFrame {
 	public void setstarticon() {
 		for(int i=0;i<Model.getFieldsize();i++) {
 			for(int j=0;j<Model.getFieldsize();j++) {
-				btn[i][j].setIcon(new ImageIcon("rsc/starticon.png"));
+				btn[i][j].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+				
+				System.out.println("hallo");
 			}
 		}
 	}
@@ -168,36 +195,36 @@ public class View extends JFrame {
 			for(int j=0;j<Model.getFieldsize();j++) {
 				switch(neuarr[i][j]) {
 				case 1:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild1.png"));
 					
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild1.png")));
 					validate();
 					break;
 				case 2:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild2.png"));
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild2.png")));
 					validate();
 					break;
 				case 3:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild3.png"));				
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild3.png")));		
 					validate();
 					break;
 				case 4:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild4.png"));			
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild4.png")));		
 					validate();
 					break;
 				case 5:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild5.png"));			
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild5.png")));		
 					validate();
 					break;
 				case 6:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild6.png"));				
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild6.png")));			
 					validate();
 					break;
 				case 7:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild7.png"));				
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild7.png")));			
 					validate();
 					break;
 				case 8:
-					btn[i][j].setIcon(new ImageIcon("rsc/bild8.png"));			
+					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild8.png")));	
 					validate();
 					break;
 				}
@@ -413,6 +440,9 @@ public class View extends JFrame {
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
+		if (counter!=1) {
+			btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+		    btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource("starticon.png")));  }
 			counter++;
 			if(counter == 1) {
 			for(int i =0;i<Model.getFieldsize();i++) {
@@ -423,36 +453,36 @@ public class View extends JFrame {
 						
 						switch(neuarr[i][j]) {
 						case 1:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild1.png"));
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild1.png")));
 							
 							validate();
 							break;
 						case 2:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild2.png"));
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild2.png")));
 							validate();
 							break;
 						case 3:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild3.png"));				
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild3.png")));				
 							validate();
 							break;
 						case 4:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild4.png"));			
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild4.png")));		
 							validate();
 							break;
 						case 5:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild5.png"));			
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild5.png")));		
 							validate();
 							break;
 						case 6:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild6.png"));				
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild6.png")));			
 							validate();
 							break;
 						case 7:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild7.png"));				
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild7.png")));			
 							validate();
 							break;
 						case 8:
-							btn[i][j].setIcon(new ImageIcon("rsc/bild8.png"));			
+							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild8.png")));		
 							validate();
 							break;
 						}
@@ -463,53 +493,64 @@ public class View extends JFrame {
 			
 			}
 			else if(counter ==2) {
-				counter =0;
+				System.out.println("drin");
+				counter =3;
 				for(int i =0;i<Model.getFieldsize();i++) {
 					for(int j=0;j<Model.getFieldsize();j++) {
 						if(btn[i][j] == e.getSource()) {
 							
 								indexi1 =i;
 								indexj1=j;
+								System.out.println(indexi1);
+								System.out.println(indexj1);
 							
 							
 							switch(neuarr[i][j]) {
 							case 1:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild1.png"));
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild1.png")));
+								
 								System.out.println("img set");
 								validate();
 								break;
 							case 2:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild2.png"));
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild2.png")));
+								
 								System.out.println("img set");
 								validate();
 								break;
 							case 3:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild3.png"));	
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild3.png")));	
+								
 								System.out.println("img set");
 								validate();
 								break;
 							case 4:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild4.png"));	
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild4.png")));
+							
 								System.out.println("img set");
 								validate();
 								break;
 							case 5:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild5.png"));
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild5.png")));
+								
 								System.out.println("img set");
 								validate();
 								break;
 							case 6:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild6.png"));	
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild6.png")));
+								
 								System.out.println("img set");
 								validate();
 								break;
 							case 7:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild7.png"));			
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild7.png")));	
+								
 								System.out.println("img set");
 								validate();
 								break;
 							case 8:
-								btn[i][j].setIcon(new ImageIcon("rsc/bild8.png"));	
+								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild8.png")));
+								
 								System.out.println("img set");
 								validate();
 								break;
@@ -517,9 +558,8 @@ public class View extends JFrame {
 						}
 						
 						
-						
-					}
 				}
+				
 				/*
 				if(neuarr[indexj][indexi] == neuarr[indexj1][indexi1]) {
 					System.out.println("gleich");
@@ -535,6 +575,33 @@ public class View extends JFrame {
 				
 				
 				}
+				
+			
+				/*
+				if(Model.getField()[indexi][indexj] == Model.getField()[indexi1][indexj1] )	{
+					btn[indexi][indexj].setIcon(null);
+					btn[indexi1][indexj1].setIcon(null);
+				}
+				else 	{
+					btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+					btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+					
+				}
+				*/
+				if(counter == 4) {
+					
+					if(Model.getField()[indexi][indexj] == Model.getField()[indexi1][indexj1] )	{
+						btn[indexi][indexj].setIcon(null);
+						btn[indexi1][indexj1].setIcon(null);
+					}
+					else 	{
+						btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+						btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+						
+					}
+				}
+				counter = 0;
+			}
 			
 			
 			
