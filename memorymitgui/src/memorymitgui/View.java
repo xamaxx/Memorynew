@@ -35,6 +35,7 @@ import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 
 public class View extends JFrame {
+	JButton spieler = new JButton();
 	private static JButton[][] btn = new JButton[Model.getFieldsize()][Model.getFieldsize()];
 	JButton b1 = new JButton("");
 	JButton b2 = new JButton("");
@@ -422,6 +423,9 @@ return null;
 		b16.requestFocus();
 		
 		
+		contentPane.add(spieler);
+		
+		
 		
 		
 
@@ -430,135 +434,126 @@ return null;
 		
 	}
 	// irgendwie muss man auf die buttons von außen zugreifen können
-	int counter =0;
-	int indexi=0;
-	int indexj=0;
-	int indexi1=0;
-	int indexj1=0;
+	int counter = 0;
+	int indexi = 2;
+	int indexj = 0;
+	int indexi1 = 1;
+	int indexj1 = 2;
+	int globalcount=1;
+	int spieler1count = 0;
+	int spieler2count = 0;
+	int samecount =0;
+	ArrayList<Integer> liste = new ArrayList<Integer>();
 	private class Clicker implements MouseListener{
 		
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-		if (counter!=1) {
-			btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
-		    btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource("starticon.png")));  }
-			counter++;
-			if(counter == 1) {
+			
+		counter++;
+		if(globalcount % 2 == 0) {
+			System.out.println("Spieler 1 ist dran");
+			spieler.setText("Spieler 1");
+			
+		}
+		else if(globalcount % 2 != 0)  {
+			System.out.println("Spieler 2 ist dran");
+			spieler.setText("Spieler 2");
+		}
+			if(counter == 2) {
+				globalcount++;
+			}
+			if(samecount == 6) {
+				System.out.println("DAS SPIEL M�SSTE JETZT ZU ENDE SEIN");
+			}
+		if(counter == 3) {
+			if(neuarr[indexi][indexj] == neuarr[indexi1][indexj1]) {
+				samecount++;
+				btn[indexi][indexj].setIcon(null);
+				btn[indexi1][indexj1].setIcon(null);
+				counter =1;
+				if(globalcount % 2 == 0) {
+					spieler1count++;
+					System.out.println(spieler1count);
+				}
+				else if(globalcount % 2 != 0) {
+					spieler2count++;
+					System.out.println(spieler2count);
+				}
+			}
+			else if((neuarr[indexi][indexj] != neuarr[indexi1][indexj1])) {
+				btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+				btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+				counter =1;
+			}
+			
+		}
+		
+			// sagen wecher spieler dran ist
 			for(int i =0;i<Model.getFieldsize();i++) {
 				for(int j=0;j<Model.getFieldsize();j++) {
 					if(btn[i][j] == e.getSource()) {
+						
+						if(counter ==1) {
 							indexi =i;
 							indexj=j;
+						}
+						else if(counter == 2) {
+							indexi1 = i;
+							indexj1=j;
+						}
 						
 						switch(neuarr[i][j]) {
 						case 1:
+							
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild1.png")));
 							
 							validate();
+							
 							break;
 						case 2:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild2.png")));
 							validate();
+							
 							break;
 						case 3:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild3.png")));				
 							validate();
+							
 							break;
 						case 4:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild4.png")));		
 							validate();
+							 
 							break;
 						case 5:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild5.png")));		
 							validate();
+							
 							break;
 						case 6:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild6.png")));			
 							validate();
+							
 							break;
 						case 7:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild7.png")));			
 							validate();
+							 
 							break;
 						case 8:
 							btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild8.png")));		
 							validate();
+							
 							break;
 						}
 					}
 					
 				}
 			}
+	
 			
-			}
-			else if(counter ==2) {
-				System.out.println("drin");
-				counter =3;
-				for(int i =0;i<Model.getFieldsize();i++) {
-					for(int j=0;j<Model.getFieldsize();j++) {
-						if(btn[i][j] == e.getSource()) {
-							
-								indexi1 =i;
-								indexj1=j;
-								System.out.println(indexi1);
-								System.out.println(indexj1);
-							
-							
-							switch(neuarr[i][j]) {
-							case 1:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild1.png")));
-								
-								System.out.println("img set");
-								validate();
-								break;
-							case 2:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild2.png")));
-								
-								System.out.println("img set");
-								validate();
-								break;
-							case 3:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild3.png")));	
-								
-								System.out.println("img set");
-								validate();
-								break;
-							case 4:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild4.png")));
-							
-								System.out.println("img set");
-								validate();
-								break;
-							case 5:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild5.png")));
-								
-								System.out.println("img set");
-								validate();
-								break;
-							case 6:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild6.png")));
-								
-								System.out.println("img set");
-								validate();
-								break;
-							case 7:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild7.png")));	
-								
-								System.out.println("img set");
-								validate();
-								break;
-							case 8:
-								btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild8.png")));
-								
-								System.out.println("img set");
-								validate();
-								break;
-							}
-						}
-						
-						
-				}
+			
 				
 				/*
 				if(neuarr[indexj][indexi] == neuarr[indexj1][indexi1]) {
@@ -574,7 +569,8 @@ return null;
 				*/
 				
 				
-				}
+				
+				
 				
 			
 				/*
@@ -588,6 +584,7 @@ return null;
 					
 				}
 				*/
+				/*
 				if(counter == 4) {
 					
 					if(Model.getField()[indexi][indexj] == Model.getField()[indexi1][indexj1] )	{
@@ -600,13 +597,14 @@ return null;
 						
 					}
 				}
-				counter = 0;
+				*/
+				
 			}
 			
 			
 			
 			
-		}
+		
 			//Model.spiel(MouseEvent e);
 // wenn ein button geklickt wurde kann ich genau sagen welcher button es war dann
 			// muss der spielzug vollführt werden mit einer methode ??
@@ -701,5 +699,6 @@ return null;
 	
 	}
 	}
+	
 
 
