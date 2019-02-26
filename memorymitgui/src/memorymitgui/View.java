@@ -1,11 +1,11 @@
 package memorymitgui;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -35,8 +35,10 @@ import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 
 public class View extends JFrame {
-	JButton spieler = new JButton();
-	private static JButton[][] btn = new JButton[Model.getFieldsize()][Model.getFieldsize()];
+	JButton spieler = new JButton(); // button zumanzeigen des aktuellen spielers
+	// 
+	
+	private static JButton[][] btn = new JButton[Model.getFieldsize()][Model.getFieldsize()]; // array in welchem die buttons gespeichert werden
 	JButton b1 = new JButton("");
 	JButton b2 = new JButton("");
 	JButton b3 = new JButton("");
@@ -53,68 +55,16 @@ public class View extends JFrame {
 	JButton b14 = new JButton("");
 	JButton b15 = new JButton("");
 	JButton b16 = new JButton("");
+	// buttons werden erzeugt
 	
-	private static boolean[][] clicked = new boolean[Model.getFieldsize()][Model.getFieldsize()]; // array das modifieziert wird wenn ein button gedr√ºckt wurde
+	
 	
 	public static JButton[][] getbtn(){
 		return btn;
 	}
 	
-	public static boolean[][] getclicked() {
-		return clicked;
-	}
 	
-	public void buttonclicked() {
-		if(b1.getModel().isPressed()) {
-			clicked[0][0] = true;
-			
-		}
-		if(b2.getModel().isPressed()) {
-			clicked[0][1] = true;
-		}
-		if(b3.getModel().isPressed()) {
-			clicked[0][2] = true;
-		}
-		if(b4.getModel().isPressed()) {
-			clicked[0][3] = true;
-		}
-		if(b5.getModel().isPressed()) {
-			clicked[1][0] = true;
-		}
-		if(b6.getModel().isPressed()) {
-			clicked[1][1] = true;
-		}
-		if(b7.getModel().isPressed()) {
-			clicked[1][2] = true;
-		}
-		if(b8.getModel().isPressed()) {
-			clicked[1][3] = true;
-		}
-		if(b9.getModel().isPressed()) {
-			clicked[2][0] = true;
-		}
-		if(b10.getModel().isPressed()) {
-			clicked[2][1] = true;
-		}
-		if(b11.getModel().isPressed()) {
-			clicked[2][2] = true;
-		}
-		if(b12.getModel().isPressed()) {
-			clicked[2][3] = true;
-		}
-		if(b13.getModel().isPressed()) {
-			clicked[3][0] = true;
-		}
-		if(b14.getModel().isPressed()) {
-			clicked[3][1] = true;
-		}
-		if(b15.getModel().isPressed()) {
-			clicked[3][2] = true;
-		}
-		if(b16.getModel().isPressed()) {
-			clicked[3][3] = true;
-		}
-	}
+	boolean[][] bt = new boolean[Model.getFieldsize()][Model.getFieldsize()];
 	
 	public void gibfeldaus() {
 		for(int i=0;i<Model.getFieldsize();i++) {
@@ -126,7 +76,7 @@ public class View extends JFrame {
 		}
 	}
 	
-	public void fillbtnarr() {
+	public void fillbtnarr() { // das array wird mit dem entsprechenden buttons wird gef¸llt
 		btn[0][0] = b1;
 		btn[0][1] = b2;
 		btn[0][2] = b3;
@@ -143,29 +93,10 @@ public class View extends JFrame {
 		btn[3][1] = b14;
 		btn[3][2] = b15;
 		btn[3][3] = b16;
-		File x = new File("test");
-		System.out.println(x.getAbsolutePath());
-		 try {
-			    Image img = ImageIO.read(getClass().getResource("bild1.png"));
-			    Image img2 = ImageIO.read(getClass().getResource("image1.jpg"));
-			    btn[0][0].setIcon(new ImageIcon(img));
-			  } catch (Exception ex) {
-			    System.out.println(ex);
-			  }
-		
 	}
-	protected ImageIcon createImageIcon(String path,
-            String description) {
-java.net.URL imgURL = getClass().getResource(path);
-if (imgURL != null) {
-return new ImageIcon(imgURL, description);
-} else {
-System.err.println("Couldn't find file: " + path);
-return null;
-}
-}
+
 	
-	public void ausgabe(){
+	public void ausgabe(){ // methode  zum debug, gibt inhalt des Modellarray aus
 		for(int i=0;i<Model.getFieldsize();i++) {
 			for(int j=0;j<Model.getFieldsize();j++) {
 				System.out.println(neuarr[i][j]);
@@ -175,66 +106,20 @@ return null;
 	
 	String buttonidf = "";
 	String neu = "";
-	public void setstarticon() {
+	public void setstarticon() { // f¸r jeden button wird das starticon gesetzt
 		for(int i=0;i<Model.getFieldsize();i++) {
 			for(int j=0;j<Model.getFieldsize();j++) {
 				btn[i][j].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
-				
-				System.out.println("hallo");
 			}
 		}
 	}
-	private JPanel contentPane;
-	private MouseAdapter mouseListener;
-	int[][] neuarr = new int[Model.getFieldsize()][Model.getFieldsize()];
+	private JPanel contentPane; // das jpanel wird erzeugt
+	private MouseAdapter mouseListener;         
+	int[][] neuarr = new int[Model.getFieldsize()][Model.getFieldsize()];  // ein array wird erzeugt, es hat so viele elemente , wie das Model array
 	public void fieldcopy() {
-		neuarr = Model.getField().clone();
+		neuarr = Model.getField().clone(); // neuarr wird mit werten vom Modellarray belegt, dieses istalso eine kopie davon
 	}
-	public void buttonimg(){ // irgendwie auf das array zugreifen und dem entsprechenden wert eine
-		// entsprechende farbe zuweisen
-		for(int i=0;i<Model.getFieldsize();i++) {
-			for(int j=0;j<Model.getFieldsize();j++) {
-				switch(neuarr[i][j]) {
-				case 1:
-					
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild1.png")));
-					validate();
-					break;
-				case 2:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild2.png")));
-					validate();
-					break;
-				case 3:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild3.png")));		
-					validate();
-					break;
-				case 4:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild4.png")));		
-					validate();
-					break;
-				case 5:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild5.png")));		
-					validate();
-					break;
-				case 6:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild6.png")));			
-					validate();
-					break;
-				case 7:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild7.png")));			
-					validate();
-					break;
-				case 8:
-					btn[i][j].setIcon(new ImageIcon(View.class.getResource("bild8.png")));	
-					validate();
-					break;
-				}
-			}
-		}
-			
-		
-	}
-	// array erstellen mit farben beim dr√ºcken √§ndern zb 
+
 	public View() {
 		/*
 		setVisible(true);
@@ -264,9 +149,9 @@ return null;
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		// so machen dass beim mausklick die position des buttons an model √ºbergeben werden kann !
@@ -423,27 +308,55 @@ return null;
 		b16.requestFocus();
 		
 		
-		contentPane.add(spieler);
+		GridBagConstraints gbc_spieler = new GridBagConstraints();
+		gbc_spieler.insets = new Insets(0, 0, 5, 0);
+		gbc_spieler.gridx = 4;
+		gbc_spieler.gridy = 0;
+		contentPane.add(spieler, gbc_spieler);
+		
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 1;
+		gbc_btnNewButton.gridy = 4;
+		contentPane.add(btnNewButton, gbc_btnNewButton);
+		btnNewButton.setText("spieler1punktzahl");
+		
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton_1.gridx = 2;
+		gbc_btnNewButton_1.gridy = 4;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		btnNewButton_1.setText("spieler2punktzahl");
 		
 		
+		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
+		gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_2.gridx = 1;
+		gbc_btnNewButton_2.gridy = 5;
+		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
 		
 		
-
-		
-		
-		
+		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
+		gbc_btnNewButton_3.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_3.gridx = 2;
+		gbc_btnNewButton_3.gridy = 5;
+		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
 	}
-	// irgendwie muss man auf die buttons von au√üen zugreifen k√∂nnen
-	int counter = 0;
+	int counter = 0; // z‰hler zum f¸r jedes klicken 
 	int indexi = 2;
 	int indexj = 0;
 	int indexi1 = 1;
 	int indexj1 = 2;
-	int globalcount=1;
+	int globalcount=0;
 	int spieler1count = 0;
 	int spieler2count = 0;
 	int samecount =0;
+	
 	ArrayList<Integer> liste = new ArrayList<Integer>();
+	private final JButton btnNewButton = new JButton("New button");
+	private final JButton btnNewButton_1 = new JButton("New button");
+	private final JButton btnNewButton_2 = new JButton("New button");
+	private final JButton btnNewButton_3 = new JButton("New button");
 	private class Clicker implements MouseListener{
 		
 		
@@ -463,31 +376,55 @@ return null;
 			if(counter == 2) {
 				globalcount++;
 			}
-			if(samecount == 6) {
-				System.out.println("DAS SPIEL M‹SSTE JETZT ZU ENDE SEIN");
+			if(samecount == 7) {
+				if(globalcount % 2 == 0) {
+					spieler1count++;
+					
+				}
+				else if(globalcount % 2 != 0)  {
+					spieler2count++;
+				}
+				if(spieler1count > spieler2count) {
+					spieler.setText("spieler 1 hat gewonnen");
+				}
+				else {
+					spieler.setText("spieler 2 hat gewonnen");
+				}
+				
 			}
+		
+			
 		if(counter == 3) {
 			if(neuarr[indexi][indexj] == neuarr[indexi1][indexj1]) {
 				samecount++;
-				btn[indexi][indexj].setIcon(null);
-				btn[indexi1][indexj1].setIcon(null);
+				btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource(("btngleich.png"))));
+				btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource(("btngleich.png"))));
 				counter =1;
+				bt[indexi][indexj] = false;
+				bt[indexi1][indexj1] = false;
+				btn[indexi][indexj].setEnabled(false);
+				btn[indexi1][indexj1].setEnabled(false);
 				if(globalcount % 2 == 0) {
 					spieler1count++;
+					btnNewButton_3.setText(Integer.toString(spieler1count));
 					System.out.println(spieler1count);
 				}
 				else if(globalcount % 2 != 0) {
 					spieler2count++;
+					btnNewButton_2.setText(Integer.toString(spieler2count));
 					System.out.println(spieler2count);
 				}
 			}
 			else if((neuarr[indexi][indexj] != neuarr[indexi1][indexj1])) {
 				btn[indexi][indexj].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+				
 				btn[indexi1][indexj1].setIcon(new ImageIcon(View.class.getResource("starticon.png")));
+				
 				counter =1;
 			}
 			
 		}
+		
 		
 			// sagen wecher spieler dran ist
 			for(int i =0;i<Model.getFieldsize();i++) {
